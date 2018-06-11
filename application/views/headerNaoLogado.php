@@ -28,8 +28,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="{url}assets/vendor/select2/select2.min.css">
         <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="{url}assets/vendor/daterangepicker/daterangepicker.css">
-        <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="{url}assets/vendor/slick/slick.css">
         <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="{url}assets/vendor/lightbox2/css/lightbox.min.css">
