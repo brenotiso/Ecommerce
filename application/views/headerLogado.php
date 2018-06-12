@@ -92,7 +92,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                         <span class="linedivide2"></span>
 
-                        <div class="header-wrapicon2">
+                        <div class="header-wrapicon2 div-carrinho" data-href="{url}Carrinho">
                             <img src="{url}assets/images/icons/icon-header-02.png" class="header-icon1">
                             <!-- Quantidade de itens no carrinho -->
                             <span class="header-icons-noti">{qtdCarrinho}</span>
@@ -132,7 +132,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>	
                     </div>
 
-                    <div class="header-wrapicon2">
+                    <div class="header-wrapicon2 div-carrinho" data-href="{url}Carrinho">
                         <img src="{url}assets/images/icons/icon-header-02.png" class="header-icon1" alt="ICON">
                         <span class="header-icons-noti">{qtdCarrinho}</span>
                     </div>
