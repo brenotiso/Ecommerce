@@ -12,6 +12,7 @@ class Produto extends CI_Model {
     
     public function getUltimosPorId($quantidade) {
         $this->db->limit($quantidade);
+        $this->db->where('disponivel', 1);
         $this->db->order_by('id', 'DESC');
         $retorno = $this->db->get("produto");
         return $retorno->result_array();
@@ -26,4 +27,3 @@ class Produto extends CI_Model {
     }
 
 }
-
