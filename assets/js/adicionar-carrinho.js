@@ -1,18 +1,18 @@
 $('.add-cart-logado').each(function () {
     var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
     $(this).on('click', function () {
+        var qtdNova = parseInt($('.div-carrinho-referencia').children("span").text()) + 1;
+        $('.div-carrinho-referencia').children("span").text(qtdNova);
+        $('.div-carrinho').children("span").text(qtdNova);
         swal({
             title: nameProduct,
             text: "foi adicionado ao carrinho!",
             icon: "success",
             buttons: {
                 continuar: "Continuar comprando",
-                carrinho: true,
+                carrinho: true
             }
         }).then((value) => {
-            var qtdAntiga = $('.div-carrinho').children("span").text();
-            var qtdNova = parseInt(qtdAntiga) + 1;
-            $('.div-carrinho').children("span").text(qtdNova);
             switch (value) {
                 case "carrinho":
                     $('.div-carrinho').click();
