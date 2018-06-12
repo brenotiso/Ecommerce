@@ -18,6 +18,17 @@ class Home extends CI_Controller {
         );
         if ($this->session->userdata("id")) {
             $dados["qtdCarrinho"] = 0;
+            $this->load->database();
+            $this->load->model("Produto");
+            $resultado = $this->Produto->getUltimosPorId(5);
+            foreach ($resultado as $produto){
+                $dados["produtoNovo"][] = array(
+                    "url" => base_url(),
+                    "nome" => $produto["nome"],
+                    //adicionar link img
+                    "preco" => $produto["preco"]
+                );
+            }
             $this->parser->parse('headerLogado', $dados);
             $this->parser->parse('homeLogado', $dados);
         } else {
