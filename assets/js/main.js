@@ -205,5 +205,10 @@
         window.location = $(this).attr("data-href");
         return false;
     });
+    
+    $(".div-carrinho-referencia").click(function () {
+        window.location = $(this).attr("data-href");
+        return false;
+    });
 
 })(jQuery);
