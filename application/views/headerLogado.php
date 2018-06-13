@@ -78,11 +78,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="header-cart header-dropdown">
                                 <ul class="header-cart-wrapitem">
                                     <li class="header-cart-item pos-center">	
-                                        <a href="#"><i class="fa fa-user-o p-r-2" aria-hidden="true"></i>Meus Dados</a>
+                                        <a href="{url}Usuario/Dados"><i class="fa fa-user-o p-r-2" aria-hidden="true"></i>Meus Dados</a>
                                     </li>
                                     <li class="header-cart-item pos-center">
-                                        <a href="#"><i class="fa fa-list-ul p-r-2" aria-hidden="true"></i></i>Minhas Compras</a>
+                                        <a href="{url}Usuario/Compras"><i class="fa fa-list-ul p-r-2" aria-hidden="true"></i></i>Minhas Compras</a>
                                     </li>
+                                    {opcoesAdmin}
                                     <li class="header-cart-item pos-center">
                                         <a href="{url}Login/sair"><i class="fa fa-sign-out p-r-2" aria-hidden="true"></i></i>Sair</a><br>
                                     </li>
@@ -120,11 +121,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="header-cart header-dropdown">
                             <ul class="header-cart-wrapitem">
                                 <li class="header-cart-item">	
-                                    <a href="#"><i class="fa fa-user-o" aria-hidden="true"></i>Meus Dados</a>
+                                    <a href="{url}Usuario/Dados"><i class="fa fa-user-o" aria-hidden="true"></i>Meus Dados</a>
                                 </li>
                                 <li class="header-cart-item">
-                                    <a href="#"><i class="fa fa-list-ul" aria-hidden="true"></i></i>Minhas Compras</a>
+                                    <a href="{url}Usuario/Compras"><i class="fa fa-list-ul" aria-hidden="true"></i></i>Minhas Compras</a>
                                 </li>
+                                {opcoesAdmin}
                                 <li class="header-cart-item">
                                     <a href="{url}Login/sair"><i class="fa fa-sign-out" aria-hidden="true"></i></i>Sair</a><br>
                                 </li>

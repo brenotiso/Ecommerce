@@ -10,15 +10,27 @@ class Home extends CI_Controller {
         $this->load->library('parser');
         $this->load->library('session');
     }
-    
+
     public function index() {
         $dados = array(
             "url" => base_url(),
             "scripts" => ''
         );
         $dados["produtoNovo"] = $this->_carregarUltimosProdutos();
+        $dados["opcoesAdmin"] = "";
         if ($this->session->userdata("id")) {
             $dados["qtdCarrinho"] = 0;
+            if ($this->session->userdata("privilegio") == 1) {
+                $dados["opcoesAdmin"] = "<li class='header-cart-item pos-center'>
+		<a href='" . base_url() . "Adm/ConsultarClientes'><i class='fa fa-address-book-o p-r-4' aria-hidden='true'></i>Consultar clientes</a>
+		</li>
+		<li class='header-cart-item pos-center'>
+		<a href='" . base_url() . "Adm/ManterProdutos'><i class='fa fa-cog p-r-4' aria-hidden='true'></i>Manter Produto</a>
+		</li>
+                <li class='header-cart-item pos-center'>
+		<a href='" . base_url() . "Adm/Vendas'><i class='fa fa-cubes p-r-4' aria-hidden='true'></i>Vendas</a>
+		</li>";
+            }
             $this->parser->parse('headerLogado', $dados);
             $this->parser->parse('homeLogado', $dados);
         } else {
@@ -27,7 +39,7 @@ class Home extends CI_Controller {
         }
         $this->parser->parse('footer', $dados);
     }
-    
+
     private function _carregarUltimosProdutos() {
         $this->load->database();
         $this->load->model("Produto");
