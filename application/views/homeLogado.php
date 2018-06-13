@@ -143,6 +143,7 @@
 
 <!-- New Product -->
 <section class="newproduct bgwhite p-t-45 p-b-105">
+    
     <div class="container">
         <div class="sec-title p-b-60">
             <h3 class="m-text5 t-center">
@@ -150,38 +151,11 @@
             </h3>
         </div>
 
-        <!-- Slide2 -->
         <div class="wrap-slick2">
             <div class="slick2">
                 {produtoNovo}
-                <div class="item-slick2 p-l-15 p-r-15">
-                    <div class="block2">
-                        <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                            <img src="{url}assets/images/item-02.jpg" alt="IMG-{nome}">
-
-                            <div class="block2-overlay trans-0-4">
-                                <div class="block2-btn-addcart w-size1 trans-0-4 add-cart-logado">
-                                    <!-- Button -->
-                                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                        Adicionar ao carrinho
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="block2-txt p-t-20">
-                            <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                {nome}
-                            </a>
-                            <span class="block2-price m-text6 p-r-5">
-                                R$ {preco}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                {/produtoNovo}
             </div>
         </div>
     </div>
-</div>
+  
 </section>
