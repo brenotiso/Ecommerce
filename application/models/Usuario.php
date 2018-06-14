@@ -13,9 +13,8 @@ class Usuario extends CI_Model {
     public function insert($dados = NULL) {
         if ($this->db->insert("usuario", $dados)) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
 }
