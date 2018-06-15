@@ -48,6 +48,7 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (retorno) {
                 if (!retorno.erro) {
+                    $("#status-pedido" + pedido).text(retorno.status);
                     $(".div-botoes-pedido").find("[data-idPedido='" + pedido + "']").attr("data-statusAtual", retorno.status); 
                     $("#modalGeral").modal("toggle");
                     swal("Sucesso", retorno.msg, "success");

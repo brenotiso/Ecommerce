@@ -16,14 +16,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="tableVenda-Titulo">Informações do cliente</div>
             </div>
             <div>
-                <div class="column-item">Teletone</div>
-                <div class="column-dado">{telefone}</div>
+                <div class="column-item">CPF</div>
+                <div class="column-dado">{cpf}</div>
                 <div class="column-item2">Cidade</div>
                 <div class="column-dado2">{cidade}</div>
             </div>
             <div>
-                <div class="column-item">CPF</div>
-                <div class="column-dado">{cpf}</div>
+                <div class="column-item">Teletone</div>
+                <div class="column-dado">{telefone}</div>
                 <div class="column-item2">Estado</div>
                 <div class="column-dado2">{estado}</div>
             </div>
@@ -34,19 +34,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="column-dado2">{cep}</div>
             </div>
             <div>
-                <div class="column-item">Data do Pedido</div>
-                <div class="column-dado">{data}</div>
+                <div class="column-item">Data do Cadastro</div>
+                <div class="column-dado">{dataCadastro}</div>
+                <div class="column-item2">Bairro</div>
+                <div class="column-dado2">{bairro}</div>
 
             </div>
             <div>
-                <div class="column-item2">Bairro</div>
-                <div class="column-dado2">{bairro}</div>
+                <div class="column-item">Data do Pedido</div>
+                <div class="column-dado">{data}</div>
                 <div class="column-item2">Rua</div>
                 <div class="column-dado2">{rua}</div>
             </div>
             <div>
-                <div class="column-item2">Número</div>
-                <div class="column-dado2">{numero}</div>
+                <div class="column-item">Status</div>
+                <div class="column-dado" id="status-pedido{idPedido}">{status}</div>
+                <div class="column-item2">Complemento</div>
+                <div class="column-dado2">{complemento}</div>
             </div>
         </div>
         <br>
@@ -66,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <div class="pos-center p-b-5 p-t-5 div-botoes-pedido">
             <button class="size10 bg1 bo-rad-23 hov1 m-text3 trans-0-4 p-r-3 btnAlterar" data-idPedido="{idPedido}" data-statusAtual="{status}" data-toggle="modal" data-target="#modalGeral">
-                Preparar pedido
+                Alterar status
             </button>
             <button class="size10 bg1 bo-rad-23 hov1 m-text3 trans-0-4 btnCancelar" data-idPedido="{idPedido}" data-toggle="modal" data-target="#modalGeral">
                 Cancelar compra

@@ -16,7 +16,6 @@ class Vendas extends CI_Controller {
         $this->load->model("Usuario");
         $this->load->model("Produto");
         $this->load->model("Compra");
-        $this->load->model("ProdutoCompra");
     }
 
     public function index() {
@@ -72,8 +71,7 @@ class Vendas extends CI_Controller {
 
     public function vendasPorCliente() {
         $resultado = $this->input->post();
-        $ids = $this->Usuario->getIdByNomeSimilar($resultado["nomeCliente"]);
-        $retorno["tabelaNova"] = $this->_montarVendas($ids, "tipo2");
+        $retorno["tabelaNova"] = $this->_montarVendas($resultado["nomeCliente"]);
         if ($retorno["tabelaNova"] == null) {
             $retorno["vazio"] = true;
         } else {
@@ -82,53 +80,20 @@ class Vendas extends CI_Controller {
         echo json_encode($retorno);
     }
 
-    private function _montarVendas($idsClientes = null, $tipo = null) {
+    private function _montarVendas($nomeCliente = null) {
         $retorno = null;
-        if($tipo == null){
-            $todasCompras = $this->Compra->get();
+        if($nomeCliente == null){
+            $todasCompras = $this->Usuario->getUsuarioJoinCompra();
         }else{
-            $todasCompras = array();
-            if (count($idsClientes) > 0) {
-                foreach ($idsClientes as $idCliente) {
-                    $resultado = null;
-                    $resultado = $this->Compra->getByIdUsuario($idCliente["id"]);
-                    $a = null;
-                    if(count($resultado) == 0){
-                        $a = array();
-                    }else{
-                        foreach($resultado as $result){
-                            $a[] = $result;
-                        }
-                    }
-                    $todasCompras = array_merge($todasCompras,$a);
-                }
-            } else{
-                return null;
-            }
+            $todasCompras = $this->Usuario->getUsuarioJoinCompra($nomeCliente);
         }
-        foreach ($todasCompras as $compra) {
-            $consulta = null;
-            $consulta["id"] = $compra["idCliente"];
-            $cliente = $this->Usuario->get($consulta);
-            unset($cliente["privilegio"]);
-            unset($cliente["id"]);
-            $consulta = null;
-            $consulta["idCompra"] = $compra["id"];
-            $itensCompra = $this->ProdutoCompra->get($consulta);
-            $produto = null;
-            foreach ($itensCompra as $item) {
-                $produtoNome = $this->Produto->getNome($item["idProduto"]);
-                $b["idProduto"] = $item["idProduto"];
-                $b["nomeProduto"] = $produtoNome[0]["nome"];
-                $b["quantidade"] = $item["quantidade"];
-                $produto[] = $b;
-            }
-            $aux["idPedido"] = $compra["id"];
-            $aux["nomeCliente"] = $cliente[0]["nome"];
-            $aux["data"] = date_format(date_create($compra["data"]), "d/m/Y - H:i:s");
-            $aux["status"] = $compra["status"];
-            $retorno["pedido"][] = $cliente[0] + $aux;
-            $retorno["pedido"][count($retorno["pedido"]) - 1]["detalheProduto"] = $produto;
+        foreach ($todasCompras as $key => $compra) {
+            $resultado = null;
+            $resultado = $this->Compra->getProdutosPorCompra($compra["idPedido"]);
+            $compra["dataCadastro"] = date_format(date_create($compra["dataCadastro"]), "d/m/Y - H:i:s");
+            $compra["data"] = date_format(date_create($compra["data"]), "d/m/Y - H:i:s");
+            $retorno["pedido"][] = $compra;
+            $retorno["pedido"][$key]["detalheProduto"] = $resultado;
         }
         if ($retorno != null) {
             $a = $this->parser->parse('vendasDetalhe', $retorno, TRUE);
