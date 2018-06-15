@@ -9,6 +9,13 @@ class Usuario extends CI_Model {
         $retorno = $this->db->get("usuario");
         return $retorno->result_array();
     }
+    
+    public function getIdByNomeSimilar($nome) {
+        $this->db->select('id');
+        $this->db->like('nome', $nome);
+        $retorno = $this->db->get("usuario");
+        return $retorno->result_array();
+    }
 
     public function insert($dados = NULL) {
         if ($this->db->insert("usuario", $dados)) {

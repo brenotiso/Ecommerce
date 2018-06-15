@@ -44,6 +44,11 @@ class Home extends CI_Controller {
                     //adicionar link img
                     "preco" => $produto["preco"]
                 );
+                if ($this->session->userdata("id")) {
+                    $produtosNovos["produtos"][count($produtosNovos["produtos"]) - 1]["logado"] = "logado";
+                }else{
+                    $produtosNovos["produtos"][count($produtosNovos["produtos"]) - 1]["logado"] = "naoLogado";
+                }
             }
             $dados = $this->parser->parse('ultimosAdicionados', $produtosNovos, TRUE);
         } else {

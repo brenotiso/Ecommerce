@@ -1,10 +1,17 @@
 $(document).ready(function () {
-    $(".containerTab").css("display", "none"); 
-});
-
-function buttonToggle(where, pval, nval) {
     $(".containerTab").css("display", "none");
-    var table = document.getElementById(where.attributes.rel.value);
-    where.value = (where.value === pval) ? nval : pval;
-    table.style.display = (table.style.display === 'block') ? 'none' : 'block';
-}
+    
+    $(document).on("click", ".botao-venda", function () {
+        $(".containerTab").css("display", "none");
+        var pedido = $(this).attr("rel");
+        var bloco = $(this).parent().parent().parent().find("#" + pedido + "");
+        if (bloco.attr("data-estado") === "ativo") {
+            bloco.css("display", "none");
+            bloco.attr("data-estado", "invisivel");
+        } else {
+            bloco.css("display", "block");
+            bloco.attr("data-estado", "ativo");
+        }
+    });
+
+});

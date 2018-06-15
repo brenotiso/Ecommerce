@@ -167,7 +167,7 @@
 
         <!-- Slide2 -->
         <div class="wrap-slick2">
-            <div class="slick2">
+            <div class="slick2" data-logado="false">
                 {produtoNovo}
             </div>
         </div>

@@ -8,6 +8,13 @@ class Compra extends CI_Model {
         if($dados != null){
             $this->db->where($dados);
         }
+        $this->db->order_by('id', 'DESC');
+        $retorno = $this->db->get("compra");
+        return $retorno->result_array();
+    }
+    
+    public function getByIdUsuario($id) {
+        $this->db->where('idCliente',$id);
         $retorno = $this->db->get("compra");
         return $retorno->result_array();
     }
