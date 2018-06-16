@@ -52,6 +52,8 @@ class Login extends CI_Controller {
     }
 
     public function sair() {
+        $this->load->library('cart');
+        $this->cart->destroy();
         $this->session->sess_destroy();
         redirect(base_url());
     }

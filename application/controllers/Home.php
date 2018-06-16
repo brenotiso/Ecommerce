@@ -9,6 +9,9 @@ class Home extends CI_Controller {
         $this->load->helper('url');
         $this->load->library('parser');
         $this->load->library('session');
+        $this->load->library('cart');
+        $this->load->database();
+        $this->load->model("Produto");
     }
 
     public function index() {
@@ -19,7 +22,7 @@ class Home extends CI_Controller {
         $dados["produtoNovo"] = $this->_carregarUltimosProdutos();
         $dados["opcoesAdmin"] = "";
         if ($this->session->userdata("id")) {
-            $dados["qtdCarrinho"] = 0;
+            $dados["qtdCarrinho"] = $this->cart->total_items();
             if ($this->session->userdata("privilegio") == 1) {
                 $dados["opcoesAdmin"] = $dados["opcoesAdmin"] = $this->parser->parse('opcoesAdm', $dados, TRUE);
             }
@@ -33,20 +36,19 @@ class Home extends CI_Controller {
     }
 
     private function _carregarUltimosProdutos() {
-        $this->load->database();
-        $this->load->model("Produto");
         $resultado = $this->Produto->getUltimosPorId(5);
         if (count($resultado) > 0) {
             foreach ($resultado as $produto) {
                 $produtosNovos["produtos"][] = array(
                     "url" => base_url(),
+                    "id" => $produto["id"],
                     "nome" => $produto["nome"],
                     //adicionar link img
                     "preco" => $produto["preco"]
                 );
                 if ($this->session->userdata("id")) {
                     $produtosNovos["produtos"][count($produtosNovos["produtos"]) - 1]["logado"] = "logado";
-                }else{
+                } else {
                     $produtosNovos["produtos"][count($produtosNovos["produtos"]) - 1]["logado"] = "naoLogado";
                 }
             }

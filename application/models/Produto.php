@@ -10,6 +10,15 @@ class Produto extends CI_Model {
         return $retorno->result_array();
     }
     
+    public function getById($id, $tipo = null) {
+        if($tipo == "carrinho"){
+            $this->db->select("id, left(nome, 27) as nome, preco, disponivel, quantidade, img");
+        }
+        $this->db->where('id', $id);
+        $retorno = $this->db->get("produto");
+        return $retorno->result_array();
+    }
+    
     public function getUltimosPorId($quantidade) {
         $this->db->limit($quantidade);
         $this->db->where('disponivel', 1);

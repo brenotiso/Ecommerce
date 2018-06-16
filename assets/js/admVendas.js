@@ -123,6 +123,13 @@ $(document).ready(function () {
     });
     
     function arrumarNomeProduto(){
+        $('.numeroComplemento').each(function () {
+            var text = $(this).text();
+            var separado = text.split('-');
+            if(separado[1] === " "){
+                $(this).text(separado[0]);
+            }
+        });
         $('.nomeProduto').each(function () {
             if($(this).find(".linkProduto").text().length > 60){
                 $(this).find(".linkProduto").text($(this).find(".linkProduto").text().substring(0, 60) + '...');

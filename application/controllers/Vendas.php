@@ -16,12 +16,13 @@ class Vendas extends CI_Controller {
         $this->load->model("Usuario");
         $this->load->model("Produto");
         $this->load->model("Compra");
+        $this->load->library('cart');
     }
 
     public function index() {
         $dados = array(
             "url" => base_url(),
-            "qtdCarrinho" => 0, //por enqanto
+            "qtdCarrinho" => $dados["qtdCarrinho"] = $this->cart->total_items(),
             "scripts" => "<script src='" . base_url() . "assets/js/tabelaVendas.js'></script>\n"
             . "<script src='" . base_url() . "assets/js/admVendas.js'></script>"
         );

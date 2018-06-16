@@ -49,8 +49,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div>
                 <div class="column-item">Status</div>
                 <div class="column-dado" id="status-pedido{idPedido}">{status}</div>
-                <div class="column-item2">Complemento</div>
-                <div class="column-dado2">{complemento}</div>
+                <div class="column-item2">Número</div>
+                <div class="column-dado2 numeroComplemento">{numero} - {complemento}</div>
             </div>
         </div>
         <br>
