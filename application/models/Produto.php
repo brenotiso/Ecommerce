@@ -4,8 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Produto extends CI_Model {
 
-    public function get($dados) {
-        $this->db->where($dados);
+    public function get($dados = NULL) {
+        if ($dados != NULL) {
+            $this->db->where($dados);
+        }
         $retorno = $this->db->get("produto");
         return $retorno->result_array();
     }
@@ -34,4 +36,11 @@ class Produto extends CI_Model {
         return false;
     }
 
+    public function alterar($dados, $id) {
+        $this->db->where("id", $id);
+        if ($this->db->update("produto", $dados)) {
+            return true;
+        }
+        return false;
+    } 
 }
