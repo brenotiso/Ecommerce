@@ -1,14 +1,49 @@
 $(document).ready(function () {
     arrumarNomeProduto();
-    $(document).on("click", ".inativarProduto",  function () {
-        var id = $(this).attr("dataidProd");
-        var nome = $(this).attr("nomeIdProd");
-        $("#delete-modal").find(".idProdutosInativar").html("Deseja realmente inativar: " + nome + "?");
-        $("#delete-modal").find(".inputInativar").attr("value",id);
-        $("#delete-modal").modal("show");
+    
+    $("#formAdicionarProduto").validate({
+        rules: {
+            nome: "required",
+            descricao: "required",
+            preco: {
+                required: true,
+                number: true
+            },
+            quantidade: {
+                required: true,
+                number: true
+            },
+            informacoes: "required",
+            'fotos[]': "required"
+                    //extension: "jpg|jpeg|png"
+        },
+        messages: {
+            nome: "Entre com o nome do produto",
+            quantidade: "Entre com uma quantidade válido",
+            preco: "Entre com um preço válido",
+            descricao: "Entre com a descrição",
+            informacoes: "Entre com as informações",
+            'fotos[]': "Entre com as imagens do produto"
+        }
     });
 
-    $(".modal-footer").on("click", "#botaoInativar", function() {
+    $(document).on("click", ".inativarProduto", function () {
+        var id = $(this).attr("dataidProd");
+        var nome = $(this).attr("nomeIdProd");
+        $("#inativar-modal").find(".idProdutosInativar").html("Deseja realmente inativar: <b>" + nome + "</b>?");
+        $("#inativar-modal").find(".inputInativar").attr("value", id);
+        $("#inativar-modal").modal("show");
+    });
+
+    $(document).on("click", ".ativarProduto", function () {
+        var id = $(this).attr("dataidProd");
+        var nome = $(this).attr("nomeIdProd");
+        $("#ativar-modal").find(".idProdutosAtivar").html("Deseja realmente ativar: <b>" + nome + "</b>?");
+        $("#ativar-modal").find(".inputAtivar").attr("value", id);
+        $("#ativar-modal").modal("show");
+    });
+
+    $("#inativar-modal").on("click", "#botaoInativar", function () {
         var prod = $(this).parent().parent().find(".inputInativar").attr("value");
         $.ajax({
             url: "ManterProdutos/inativarProduto",
@@ -19,90 +54,83 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (retorno) {
                 if (!retorno.erro) {
-                    $("#delete-modal").modal("toggle");
+                    $("#inativar-" + prod).attr("class", "hidden");
+                    $("#ativar-" + prod).attr("class", "btn btn-primary btn-xs ativarProduto");
+                    $("#inativar-modal").modal("toggle");
                     swal("Sucesso", retorno.msg, "success");
                 } else {
-                    $("#delete-modal").modal("toggle");
+                    $("#inativar-modal").modal("toggle");
                     swal("Opa", retorno.msg, "error");
                 }
             }
         });
     });
 
-    $(".modal-footer").on("click", "#cancelarPedido", function() {
-        var pedido = $('.idPedido').html() ;
+    $("#ativar-modal").on("click", "#botaoAtivar", function () {
+        var prod = $(this).parent().parent().find(".inputAtivar").attr("value");
         $.ajax({
-            url: "Vendas/cancelarPedido",
+            url: "ManterProdutos/ativarProduto",
             type: 'POST',
             data: {
-                id: pedido
+                id: prod
             },
             dataType: 'json',
             success: function (retorno) {
-                if (!retorno.erro) { 
-                    $("#modalGeral").modal("toggle");
-                    if($('.divPedido').length === 1){
-                        $("#nenhumaVenda").attr("class", "");
-                        $("#nenhumaVenda").css("padding-bottom", "100px");
-                    }
-                    $(".divPedido").find("[data-idPedido='" + pedido + "']").remove();
+                if (!retorno.erro) {
+                    $("#inativar-" + prod).attr("class", "btn btn-danger btn-xs inativarProduto");
+                    $("#ativar-" + prod).attr("class", "hidden");
+                    $("#ativar-modal").modal("toggle");
                     swal("Sucesso", retorno.msg, "success");
                 } else {
-                    $("#modalGeral").modal("toggle");
+                    $("#ativar-modal").modal("toggle");
                     swal("Opa", retorno.msg, "error");
-                };
+                }
             }
         });
     });
-    
-    function pesquisarCliente(){
-        var cliente = $("#inputPesquisa").val();
+
+    function pesquisarProduto(produto) {
         $.ajax({
-            url: "Vendas/vendasPorCliente",
+            url: "ManterProdutos/pesquisarProduto",
             type: 'POST',
             data: {
-                nomeCliente: cliente
+                nomeProduto: produto
             },
             dataType: 'json',
             success: function (retorno) {
-                if (retorno.vazio) { 
-                    $("#nenhumaVendaCliente").attr("class", "");
-                    $("#nenhumaVendaCliente").css("padding-bottom", "100px");
-                    $(".headRow").css("display", "none");
-                    $(".divPedido").remove();
+                if (retorno.vazio) {
+//                    $("#nenhumaVendaCliente").attr("class", "");
+//                    $("#nenhumaVendaCliente").css("padding-bottom", "100px");
+//                    $(".headRow").css("display", "none");
+//                    $(".divPedido").remove();
                 } else {
                     $("#nenhumaVendaCliente").attr("class", "hidden");
                     $(".headRow").css("display", "block");
                     $("#todosPedidos").html(retorno.tabelaNova);
                     $(".botao-venda").click().click();
                     arrumarNomeProduto();
-                };
+                }
+                ;
             }
         });
     }
-    
+
     $("#inputPesquisa").on('keyup', function (e) {
         if (e.keyCode === 13) {
-            pesquisarCliente();
+            pesquisarProduto($("#inputPesquisa").val());
         }
     });
-    
-    $("#pesquisarCliente").click(function () {
-        pesquisarCliente();
+
+    $("#pesquisarProduto").click(function () {
+        pesquisarProduto($("#inputPesquisa").val());
     });
-    
-    function arrumarNomeProduto(){
+
+    function arrumarNomeProduto() {
         $('.nomeProduto').each(function () {
-            if($(this).text().length > 53){
+            if ($(this).text().length > 53) {
                 $(this).text($(this).text().substring(0, 53) + '...');
             }
         });
-        $('.inativarProduto').each(function () {
-            //var disponivel = $(this).attr("valorDisponibilidade");
-            //if (disponivel === 0) {
-                //$(this).html("Ativar");
-                $(".inativarProduto").attr("class", "btn btn-success btn-xs ativarProduto");
-            //}
-        )};
     }
+
 });

@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="{url}assets/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
         <!--===============================================================================================-->
-        <!-- <link rel="stylesheet" type="text/css" href="{url}assets/fonts/elegant-font/html-css/style.css"> ->
+        <!-- <link rel="stylesheet" type="text/css" href="{url}assets/fonts/elegant-font/html-css/style.css"> -->
         <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="{url}assets/vendor/animate/animate.css">
         <!--===============================================================================================-->

@@ -17,9 +17,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-sm-6">
 
                 <div class="input-group h2">
-                    <input name="data[search]" class="form-control" id="search" type="text" placeholder="Pesquisar produto">
+                    <input class="form-control" id="inputPesquisa" type="text" placeholder="Pesquisar produto">
                     <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit">
+                        <button class="btn btn-primary" id="pesquisarProduto">
                             <i class="fs-12 fa fa-search" aria-hidden="true"></i>
                         </button>
                     </span>
@@ -27,13 +27,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             </div>
             <div class="col-sm-3">
-                <button href="add.html" class="btn btn-primary pull-right h2" data-toggle="modal" data-target="#add-modal">Novo Produto</button>
+                <button class="btn btn-primary pull-right h2" data-toggle="modal" data-target="#add-modal">Novo Produto</button>
             </div>
         </div> <!-- /#top -->
 
         <hr />
-
-        <div class="table-responsive col-md-12">
+        <p class="p-b-150 hidden{pVazio}" id="nenhumaVenda">Nenhum produto cadastrado.</p>
+        <div class="table-responsive col-md-12 {vazio}">
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -75,32 +75,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <h4 class="modal-title" id="modalLabel">Adicionar Produto</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
             </div>
+            <form id="formAdicionarProduto" method="POST" action="{url}index.php/ManterProdutos/adicionarProduto" enctype=multipart/form-data>
             <div class="modal-body">
-                <form>
-                    <div class="bo4 of-hidden size15 m-b-20">
+                    <div class="bo4 size15 m-b-20">
                         <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="nome" placeholder="Nome do produto">
                     </div>
 
-                    <div class="bo4 of-hidden size15 m-b-20">
+                    <div class="bo4 size15 m-b-20">
                         <input class="sizefull s-text7 p-l-22 p-r-22" type="number" name="quantidade" placeholder="Quantidade">
                     </div>
 
-                    <div class="bo4 of-hidden size15 m-b-20">
+                    <div class="bo4 size15 m-b-20">
                         <input class="sizefull s-text7 p-l-22 p-r-22" type="number" step="0.01" name="preco" placeholder="Preço">
                     </div>
 
-                    <div class="bo4 of-hidden size15 m-b-20">
+                    <div class="bo4 size15 m-b-20">
                         <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="descricao" placeholder="Descrição">
                     </div>
 
                     <div class="form-group">
-                        <textarea class="form-control" class="sizefull s-text7 p-l-22 p-r-22"  placeholder="Informações Adicionais"></textarea>
+                        <textarea class="form-control sizefull s-text7 p-l-22 p-r-22" name="informacoes" placeholder="Informações Adicionais"></textarea>
                     </div>
-                </form>
+                
+                    <div class="form-group">
+                        <input name="fotos[]" type="file" accept="image/*" multiple>
+                    </div>
+                    <input class="hidden" type="hidden" name="disponivel" value="1">
+                
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" type="submit">Adicionar</button>
+                <button class="btn btn-primary btnAddProduto">Adicionar</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -145,7 +151,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 <!-- Modal Inativar-->
-<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+<div class="modal fade" id="inativar-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -158,6 +164,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="botaoInativar">Sim</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Ativar-->
+<div class="modal fade" id="ativar-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalLabel">Ativar Item</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" class="inputAtivar" value="" />
+                <p class="idProdutosAtivar"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="botaoAtivar">Sim</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
             </div>
         </div>
