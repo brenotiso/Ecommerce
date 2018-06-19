@@ -32,15 +32,16 @@ class ManterProdutos extends CI_Controller {
     }
     
     public function inativarProduto() {
-        $id = $this->input->post();
+        $resultado = $this->input->post();
+        $id = $resultado["id"];
         $dados["disponivel"] = 0;
-        if($this->Produto->alterar($dados, $id["id"])) {
+        if($this->Produto->alterar($dados, $id)) {
             $retorno["erro"] = false;
-            $retorno["descricao"] = "inativado com sucesso!";
+            $retorno["msg"] = "Produto inativado com sucesso!";
         }
         else {
-           $retorno["erro"] = true;
-            $retorno["descricao"] = "Erro ao tentar inativar!"; 
+            $retorno["erro"] = true;
+            $retorno["msg"] = "Ocorreu um erro ao inativar!"; 
         }
         return json_encode($retorno);
     }

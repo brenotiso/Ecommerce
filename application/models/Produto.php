@@ -12,6 +12,12 @@ class Produto extends CI_Model {
         return $retorno->result_array();
     }
     
+    public function getByDisponibilidade() {
+        $this->db->where('disponivel', 1);
+        $retorno = $this->db->get("produto");
+        return $retorno->result_array();
+    }
+    
     public function getById($id, $tipo = null) {
         if($tipo == "carrinho"){
             $this->db->select("id, left(nome, 27) as nome, preco, disponivel, quantidade, img");

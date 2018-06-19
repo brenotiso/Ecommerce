@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+
 <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url({url}assets/images/heading-pages-01.jpg);">
     <h2 class="l-text2 t-center">
         Manter Produtos
@@ -153,7 +154,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="modal-body">
                 <input type="hidden" class="inputInativar" value="" />
-                <div class="idProdutosInativar"></div>
+                <p class="idProdutosInativar"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="botaoInativar">Sim</button>

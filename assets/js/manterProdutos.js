@@ -1,29 +1,29 @@
 $(document).ready(function () {
     arrumarNomeProduto();
-
     $(document).on("click", ".inativarProduto",  function () {
         var id = $(this).attr("dataidProd");
-        $("#delete-modal").find(".idProdutosInativar").html("Deseja realmente inativar o produto de id: " + id + "?");
+        var nome = $(this).attr("nomeIdProd");
+        $("#delete-modal").find(".idProdutosInativar").html("Deseja realmente inativar: " + nome + "?");
         $("#delete-modal").find(".inputInativar").attr("value",id);
         $("#delete-modal").modal("show");
     });
 
-    $("#delete-modal").on("click", "#botaoInativar", function() {
-        var id = $(this).parent().parent().find(".inputInativar").attr("value");
+    $(".modal-footer").on("click", "#botaoInativar", function() {
+        var prod = $(this).parent().parent().find(".inputInativar").attr("value");
         $.ajax({
             url: "ManterProdutos/inativarProduto",
             type: 'POST',
             data: {
-                id: id
+                id: prod
             },
             dataType: 'json',
             success: function (retorno) {
                 if (!retorno.erro) {
-                    $("#modalGeral").modal("toggle");
-                    swal("Sucesso", retorno.descricao, "success");
+                    $("#delete-modal").modal("toggle");
+                    swal("Sucesso", retorno.msg, "success");
                 } else {
-                    $("#modalGeral").modal("toggle");
-                    swal("Opa", retorno.descricao, "error");
+                    $("#delete-modal").modal("toggle");
+                    swal("Opa", retorno.msg, "error");
                 }
             }
         });
@@ -97,5 +97,12 @@ $(document).ready(function () {
                 $(this).text($(this).text().substring(0, 53) + '...');
             }
         });
+        $('.inativarProduto').each(function () {
+            //var disponivel = $(this).attr("valorDisponibilidade");
+            //if (disponivel === 0) {
+                //$(this).html("Ativar");
+                $(".inativarProduto").attr("class", "btn btn-success btn-xs ativarProduto");
+            //}
+        )};
     }
 });
