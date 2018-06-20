@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="item-slick2 p-l-15 p-r-15">
     <div class="block2">
         <div class="block2-img wrap-pic-w of-hidden pos-relative">
-            <img src="{url}assets/images/item-02.jpg" alt="IMG-{nome}">
+            <img height="363" src="{url}assets/images/{img}" alt="IMG-{nome}">
 
             <div class="block2-overlay trans-0-4">
                 <div class="block2-btn-addcart w-size1 trans-0-4 add-cart-{logado}" data-idProduto="{id}">

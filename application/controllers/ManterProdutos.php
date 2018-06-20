@@ -26,22 +26,9 @@ class ManterProdutos extends CI_Controller {
             "pVazio" => ""
         );
         $dados["opcoesAdmin"] = $this->parser->parse('opcoesAdm', $dados, TRUE);
-        $dadosLinha["produtos"] = $this->Produto->get();
-        foreach ($dadosLinha["produtos"] as $key => $prod) {
-            if ($prod["disponivel"] == 1) {
-                $dadosLinha["produtos"][$key]["inativar"] = "";
-                $dadosLinha["produtos"][$key]["ativar"] = "hidden";
-            } else {
-                $dadosLinha["produtos"][$key]["inativar"] = "hidden";
-                $dadosLinha["produtos"][$key]["ativar"] = "";
-                if ($prod["quantidade"] <= 0) {
-                    $dadosLinha["produtos"][$key]["ativar"] = "disabled";
-                }
-            }
-        }
-        $dados["produtos"] = $this->parser->parse("ManterProdutosLinha", $dadosLinha, true);
+        $dados["produtos"] = $this->_produtosLinha();
         $this->parser->parse('headerLogado', $dados);
-        if (count($dadosLinha["produtos"]) == 0) {
+        if ($dados["produtos"] == null) {
             $dados["vazio"] = "hidden";
             $dados["pVazio"] = "Nao";
         }
@@ -77,31 +64,98 @@ class ManterProdutos extends CI_Controller {
         echo json_encode($retorno);
     }
 
+    public function buscarProduto() {
+        $resultado = $this->input->post();
+        $retorno["tabelaNova"] = $this->_produtosLinha($resultado["nomeProduto"]);
+        if ($retorno["tabelaNova"] == null) {
+            $retorno["vazio"] = true;
+        } else {
+            $retorno["vazio"] = false;
+        }
+        echo json_encode($retorno);
+    }
+
     public function adicionarProduto() {
         $form = $this->input->post();
-        $arqvs = $_FILES["fotos"];
+        $files = $_FILES;
+
+        if ($form["quantidade"] > 0) {
+            $form["disponivel"] = 1;
+        } else {
+            $form["disponivel"] = 0;
+        }
         if ($this->Produto->insert($form)) {
-            $idProduto = $this->db->insert_id();
-            $total = count($_FILES['fotos']['name']);
-            for ($i = 0; $i < $total; $i++) {
-                $tmpFilePath = $_FILES['fotos']['tmp_name'][$i];
-                if ($tmpFilePath != "") {
-                    $newFilePath = "../../imgs/" . $idProduto . "-" . $i;
-                    if (move_uploaded_file($tmpFilePath, $newFilePath)) {
-                        $retorno["erro"] = true;
-                        $retorno["msg"] = "tudo ok.";
-                    } else {
-                        $retorno["erro"] = false;
-                        $retorno["msg"] = "Erro ao upar foto.";
-                    }
+            $id = $this->db->insert_id();
+            $retorno = $this->_uparImagens($files, $id);
+            if ($retorno) {
+                $atualizar["img"] = "";
+                foreach ($retorno as $img) {
+                    $atualizar["img"] = $atualizar["img"] . $img . ";";
                 }
+                $this->Produto->alterar($atualizar, $id);
+            } else {
+                $retorno["erro"] = false;
+                $retorno["msg"] = "Erro ao upar foto.";
             }
         } else {
             $retorno["erro"] = true;
             $retorno["msg"] = "Erro ao inserir.";
         }
-        print_r($retorno);
-        //redirect(base_url());
+        redirect(base_url() . "ManterProdutos");
+    }
+
+    private function _uparImagens($files, $id) {
+        $this->load->library('upload');
+        $cpt = count($files['userfile']['name']);
+        for ($i = 0; $i < $cpt; $i++) {
+            $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
+            $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
+            $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
+            $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
+            $_FILES['userfile']['size'] = $files['userfile']['size'][$i];
+            $nomeArqv = $id . "-" . $i;
+            $this->upload->initialize($this->_set_upload_options($nomeArqv));
+            if (!$this->upload->do_upload()) {
+                return false;
+            } else {
+                $retorno[] = $nomeArqv . "." . (pathinfo($files['userfile']['name'][$i], PATHINFO_EXTENSION));
+            }
+        }
+        return $retorno;
+    }
+
+    private function _set_upload_options($nome) {
+        $config['file_name'] = $nome;
+        $config['upload_path'] = './assets/images/produtos';
+        $config['allowed_types'] = 'jpg|png|jpeg|JPEG|JPG|PN';
+        $config['max_size'] = '0';
+        $config['overwrite'] = FALSE;
+
+        return $config;
+    }
+
+    private function _produtosLinha($nome = null) {
+        if($nome == null){
+            $dadosLinha["produtos"] = $this->Produto->get();
+        }else{
+            $dadosLinha["produtos"] = $this->Produto->getByNome($nome);
+        }
+        if(count($dadosLinha["produtos"]) == 0){
+            return null;
+        }
+        foreach ($dadosLinha["produtos"] as $key => $prod) {
+            if ($prod["disponivel"] == 1) {
+                $dadosLinha["produtos"][$key]["inativar"] = "";
+                $dadosLinha["produtos"][$key]["ativar"] = "hidden";
+            } else {
+                $dadosLinha["produtos"][$key]["inativar"] = "hidden";
+                $dadosLinha["produtos"][$key]["ativar"] = "";
+                if ($prod["quantidade"] <= 0) {
+                    $dadosLinha["produtos"][$key]["ativar"] = "disabled";
+                }
+            }
+        }
+        return $this->parser->parse("ManterProdutosLinha", $dadosLinha, true);
     }
 
 }

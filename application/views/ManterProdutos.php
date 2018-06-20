@@ -33,25 +33,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <hr />
         <p class="p-b-150 hidden{pVazio}" id="nenhumaVenda">Nenhum produto cadastrado.</p>
+        <p class="hidden" id="nenhumaPordutoNome">Nenhum produto cadastrado com esse nome.</p>
         <div class="table-responsive col-md-12 {vazio}">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Produto</th>
-                        <th>Preço (R$)</th>
-                        <th>Data adição</th>
-                        <th class="actions">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {produtos}
-                </tbody>
+            <table class="table table-hover" id="tabelaProdutos">
+                <tr>
+                    <th>ID</th>
+                    <th>Produto</th>
+                    <th>Preço (R$)</th>
+                    <th>Data adição</th>
+                    <th class="actions">Ações</th>
+                </tr>
+                {produtos}
             </table>
         </div>
 
-    </div> <!-- /#list -->
-
+    </div> 
+    
+    <!-- /#list -->
     <!--
     <div id="bottom" class="row">
             <div class="col-md-12">
@@ -64,7 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </ul>
             </div>
     </div> -->
-</div>
+    
 </section>
 
 <!-- Modal Add Produto-->
@@ -75,8 +73,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <h4 class="modal-title" id="modalLabel">Adicionar Produto</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
             </div>
-            <form id="formAdicionarProduto" method="POST" action="{url}index.php/ManterProdutos/adicionarProduto" enctype=multipart/form-data>
-            <div class="modal-body">
+            <form type="multipart" id="formAdicionarProduto" method="POST" action="{url}ManterProdutos/adicionarProduto" enctype=multipart/form-data>
+                <div class="modal-body">
                     <div class="bo4 size15 m-b-20">
                         <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="nome" placeholder="Nome do produto">
                     </div>
@@ -96,16 +94,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="form-group">
                         <textarea class="form-control sizefull s-text7 p-l-22 p-r-22" name="informacoes" placeholder="Informações Adicionais"></textarea>
                     </div>
-                
+
                     <div class="form-group">
-                        <input name="fotos[]" type="file" accept="image/*" multiple>
+                        <input class="form-control-file" name="userfile[]" type="file" accept="image/*" multiple>
                     </div>
-                    <input class="hidden" type="hidden" name="disponivel" value="1">
-                
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary btnAddProduto">Adicionar</button>
-            </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btnAddProduto">Adicionar</button>
+                </div>
             </form>
         </div>
     </div>

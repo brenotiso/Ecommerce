@@ -43,9 +43,14 @@ class Home extends CI_Controller {
                     "url" => base_url(),
                     "id" => $produto["id"],
                     "nome" => $produto["nome"],
-                    //adicionar link img
                     "preco" => $produto["preco"]
                 );
+                $imagem = explode(";", $produto["img"]);
+                if($imagem[0] != ""){
+                    $produtosNovos["produtos"][count($produtosNovos["produtos"]) - 1]["img"] = "produtos/".$imagem[0];
+                }else{
+                    $produtosNovos["produtos"][count($produtosNovos["produtos"]) - 1]["img"] = "item-02.jpg";
+                }
                 if ($this->session->userdata("id")) {
                     $produtosNovos["produtos"][count($produtosNovos["produtos"]) - 1]["logado"] = "logado";
                 } else {

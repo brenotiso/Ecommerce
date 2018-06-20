@@ -1,8 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+
 {produtos}
-<tr>
+<tr class="trProduto">
     <td>{id}</td>
     <td class="nomeProduto">{nome}</td>
     <td>{preco}</td>

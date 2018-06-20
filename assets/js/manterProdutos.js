@@ -90,8 +90,9 @@ $(document).ready(function () {
     });
 
     function pesquisarProduto(produto) {
+        console.log(produto);
         $.ajax({
-            url: "ManterProdutos/pesquisarProduto",
+            url: "ManterProdutos/buscarProduto",
             type: 'POST',
             data: {
                 nomeProduto: produto
@@ -99,15 +100,14 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (retorno) {
                 if (retorno.vazio) {
-//                    $("#nenhumaVendaCliente").attr("class", "");
-//                    $("#nenhumaVendaCliente").css("padding-bottom", "100px");
-//                    $(".headRow").css("display", "none");
-//                    $(".divPedido").remove();
+                    $("#nenhumaPordutoNome").attr("class", "");
+                    $("#nenhumaPordutoNome").css("padding-bottom", "150px");
+                    $("#tabelaProdutos").css("display", "none");
                 } else {
-                    $("#nenhumaVendaCliente").attr("class", "hidden");
-                    $(".headRow").css("display", "block");
-                    $("#todosPedidos").html(retorno.tabelaNova);
-                    $(".botao-venda").click().click();
+                    $(".trProduto").remove();
+                    $("#nenhumaPordutoNome").attr("class", "hidden");
+                    $("#tabelaProdutos").css("display", "block");
+                    $("#tabelaProdutos tbody").append(retorno.tabelaNova);
                     arrumarNomeProduto();
                 }
                 ;

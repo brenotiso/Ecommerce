@@ -14,10 +14,12 @@ class Compra extends CI_Model {
     }
 
     public function getProdutosPorCompra($id) {
-        $query = $this->db->query('SELECT PC.idCompra AS idPedido, P.nome AS nomeProduto, PC.idProduto, PC.quantidade ' 
-            .'FROM produto_compra PC, produto P '
-            .'WHERE PC.idProduto = P.id AND PC.idCompra = ' . $id);
-        return $query->result_array();
+        $this->db->select("PC.idCompra AS idPedido, P.nome AS nomeProduto, PC.idProduto, PC.quantidade");
+        $this->db->from("produto_compra PC, produto P");
+        $this->db->where("PC.idProduto = P.id");
+        $this->db->where("PC.idCompra", $id);
+        $retorno = $this->db->get();
+        return $retorno->result_array();
     }
 
     public function alter($id, $dados) {
