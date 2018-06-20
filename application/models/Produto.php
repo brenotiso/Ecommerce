@@ -27,6 +27,12 @@ class Produto extends CI_Model {
         return $retorno->result_array();
     }
     
+    public function getByNome($nome) {
+        $this->db->like('nome', $nome, 'both');
+        $retorno = $this->db->get('produto');
+        return $retorno->result_array();
+    }
+    
     public function getUltimosPorId($quantidade) {
         $this->db->limit($quantidade);
         $this->db->where('disponivel', 1);
