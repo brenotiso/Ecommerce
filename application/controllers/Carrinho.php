@@ -53,12 +53,17 @@ class Carrinho extends CI_Controller {
                     $produtos[0]["nome"] = $produtos[0]["nome"] . "...";
                 }
                 $img = explode(";", $produtos[0]["img"]);
+                if($img[0] != ""){
+                    $imagem = "produtos/".$img[0];
+                }else{
+                    $imagem = "item-10.jpg";
+                }
                 $dados = array(
                     "id" => $produtos[0]["id"],
                     "qty" => 1,
                     "price" => $produtos[0]["preco"],
                     "name" => $produtos[0]["nome"],
-                    "img" => $img[0]
+                    "img" => $imagem
                 );
                 $this->cart->insert($dados);
             }
