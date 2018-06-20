@@ -55,7 +55,22 @@ $(document).ready(function () {
             $.post("ManterProdutos/atualizarProduto", dados, function (retorno) {
                 retorno = JSON.parse(retorno);
                 if (!retorno.erro) {
+                    var id = $("#idProd").val();
+                    var nome = $("#nomeProd").val();
+                    var preco = $("#idPreco").val();
+                    var qtd = $("#idQtdProd").val();
+                    $("#tdNome-" + id).html(nome);
+                    $("#tdPreco-" + id).html(preco);
+                    if(qtd > 0){
+                        $("#inativar-" + id).removeClass("hidden");
+                        $("#ativar-" + id).addClass("hidden");
+                    }else{
+                        $("#inativar-" + id).addClass("hidden");
+                        $("#ativar-" + id).removeClass("hidden");
+                        $("#ativar-" + id).addClass("disabled");
+                    }
                     $("#editar-modal").modal("toggle");
+                    arrumarNomeProduto();
                     swal("Tudo certo", retorno.msg, "success");
                 } else {
                     $("#editar-modal").modal("toggle");
@@ -74,11 +89,13 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".ativarProduto", function () {
-        var id = $(this).attr("dataidProd");
-        var nome = $(this).attr("nomeIdProd");
-        $("#ativar-modal").find(".idProdutosAtivar").html("Deseja realmente ativar: <b>" + nome + "</b>?");
-        $("#ativar-modal").find(".inputAtivar").attr("value", id);
-        $("#ativar-modal").modal("show");
+        if(!($(this).hasClass("disabled"))){
+            var id = $(this).attr("dataidProd");
+            var nome = $(this).attr("nomeIdProd");
+            $("#ativar-modal").find(".idProdutosAtivar").html("Deseja realmente ativar: <b>" + nome + "</b>?");
+            $("#ativar-modal").find(".inputAtivar").attr("value", id);
+            $("#ativar-modal").modal("show");
+        }
     });
     
     $(document).on("click", ".editarProduto", function () {

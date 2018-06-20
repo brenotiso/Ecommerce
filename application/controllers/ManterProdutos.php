@@ -91,6 +91,8 @@ class ManterProdutos extends CI_Controller {
         }
         if($dados["quantidade"] == 0){
             $dados["disponivel"] = 0;
+        }else{
+            $dados["disponivel"] = 1;
         }
         $id = $dados["id"];
         unset($dados["id"]);

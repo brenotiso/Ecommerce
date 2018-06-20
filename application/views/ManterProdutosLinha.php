@@ -5,8 +5,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 {produtos}
 <tr class="trProduto">
     <td>{id}</td>
-    <td class="nomeProduto">{nome}</td>
-    <td>{preco}</td>
+    <td class="nomeProduto" id="tdNome-{id}">{nome}</td>
+    <td id="tdPreco-{id}">{preco}</td>
     <td>{data}</td>
     <td class="actions">
         <a class="btn btn-success btn-xs" href="#">Visualizar</a>
