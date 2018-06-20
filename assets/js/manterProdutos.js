@@ -1,6 +1,6 @@
 $(document).ready(function () {
     arrumarNomeProduto();
-    
+
     $("#formAdicionarProduto").validate({
         rules: {
             nome: "required",
@@ -26,6 +26,44 @@ $(document).ready(function () {
             'fotos[]': "Entre com as imagens do produto"
         }
     });
+    
+    $("#formEditar").validate({
+        rules: {
+            nome: "required",
+            quantidade: {
+                required: true,
+                min: 0,
+                number: true
+            },
+            descricao: "required",
+            preco: {
+                required: true,
+                min: 0,
+                number: true
+            },
+            informacoes: "required"
+        },
+        messages: {
+            nome: "Entre com um nome",
+            quantidade: "Entre com uma quantidade",
+            descricao: "Entre com uma descrição",
+            preco: "Entre com um preço",
+            informacoes: "Entre com informações sobre o produto"
+        },
+        submitHandler: function () {
+            var dados = $("#formEditar").serialize();
+            $.post("ManterProdutos/atualizarProduto", dados, function (retorno) {
+                retorno = JSON.parse(retorno);
+                if (!retorno.erro) {
+                    $("#editar-modal").modal("toggle");
+                    swal("Tudo certo", retorno.msg, "success");
+                } else {
+                    $("#editar-modal").modal("toggle");
+                    swal("Opa", retorno.msg, "error");
+                }
+            });
+        }
+    });
 
     $(document).on("click", ".inativarProduto", function () {
         var id = $(this).attr("dataidProd");
@@ -41,6 +79,27 @@ $(document).ready(function () {
         $("#ativar-modal").find(".idProdutosAtivar").html("Deseja realmente ativar: <b>" + nome + "</b>?");
         $("#ativar-modal").find(".inputAtivar").attr("value", id);
         $("#ativar-modal").modal("show");
+    });
+
+    $(document).on("click", ".editarProduto", function () {
+        var prod = $(this).attr("dataidProd");
+        $.ajax({
+            url: "ManterProdutos/recuperarProduto",
+            type: 'POST',
+            data: {
+                id: prod
+            },
+            dataType: 'json',
+            success: function (dados) {
+                $("#editar-modal").find("#nomeProd").val(dados.nome);
+                $("#editar-modal").find("#idQtdProd").val(dados.quantidade);
+                $("#editar-modal").find("#idPreco").val(dados.preco);
+                $("#editar-modal").find("#idDescricao").val(dados.descricao);
+                $("#editar-modal").find("#idInformacoes").val(dados.informacoes);
+                $("#editar-modal").find("#idProd").val(dados.id);
+            }
+        });
+        $("#editar-modal").modal("show");
     });
 
     $("#inativar-modal").on("click", "#botaoInativar", function () {
@@ -132,5 +191,4 @@ $(document).ready(function () {
             }
         });
     }
-
 });

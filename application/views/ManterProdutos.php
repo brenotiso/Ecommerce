@@ -76,7 +76,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
             </div>
             <form id="formAdicionarProduto" method="POST" action="{url}index.php/ManterProdutos/adicionarProduto" enctype=multipart/form-data>
-            <div class="modal-body">
+                <div class="modal-body">
                     <div class="bo4 size15 m-b-20">
                         <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="nome" placeholder="Nome do produto">
                     </div>
@@ -96,16 +96,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="form-group">
                         <textarea class="form-control sizefull s-text7 p-l-22 p-r-22" name="informacoes" placeholder="Informações Adicionais"></textarea>
                     </div>
-                
+
                     <div class="form-group">
                         <input name="fotos[]" type="file" accept="image/*" multiple>
                     </div>
                     <input class="hidden" type="hidden" name="disponivel" value="1">
-                
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary btnAddProduto">Adicionar</button>
-            </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btnAddProduto">Adicionar</button>
+                </div>
             </form>
         </div>
     </div>
@@ -120,31 +120,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="bo4 of-hidden size15 m-b-20">
-                        <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="nome" value="Produto X" placeholder="Nome do produto">
+                <form id="formEditar">
+                    <div class="bo4 size15 m-b-20">
+                        <input class="sizefull s-text7 p-l-22 p-r-22" id="nomeProd" type="text" name="nome" value="" placeholder="Nome do produto">
                     </div>
 
-                    <div class="bo4 of-hidden size15 m-b-20">
-                        <input class="sizefull s-text7 p-l-22 p-r-22" type="number" name="quantidade"  value="10" placeholder="Quantidade">
+                    <div class="bo4 size15 m-b-20">
+                        <input class="sizefull s-text7 p-l-22 p-r-22" id="idQtdProd" type="number" name="quantidade"  value="" placeholder="Quantidade">
                     </div>
 
-                    <div class="bo4 of-hidden size15 m-b-20">
-                        <input class="sizefull s-text7 p-l-22 p-r-22" type="number" step="0.01"  value="150.00" name="preco" placeholder="Preço">
+                    <div class="bo4 size15 m-b-20">
+                        <input class="sizefull s-text7 p-l-22 p-r-22" id="idPreco" type="number" step="0.01"  value="" name="preco" placeholder="Preço">
                     </div>
 
-                    <div class="bo4 of-hidden size15 m-b-20">
-                        <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="descricao"  value="Blá blá" placeholder="Descrição">
+                    <div class="bo4 size15 m-b-20">
+                        <input class="sizefull s-text7 p-l-22 p-r-22" id="idDescricao" type="text" name="descricao"  value="" placeholder="Descrição">
                     </div>
 
                     <div class="form-group">
-                        <textarea class="form-control" class="sizefull s-text7 p-l-22 p-r-22" placeholder="Informações Adicionais">Blá blá</textarea>
+                        <textarea class="form-control" class="sizefull s-text7 p-l-22 p-r-22" id="idInformacoes" name="informacoes" placeholder="Informações Adicionais"></textarea>
+                    </div>
+                    <input class="hidden" type="hidden" id="idProd" name="id" value="">
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Salvar</button>
+                        <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" type="submit">Salvar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>

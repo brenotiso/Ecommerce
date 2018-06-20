@@ -48,6 +48,48 @@ class ManterProdutos extends CI_Controller {
         $this->parser->parse('ManterProdutos', $dados);
         $this->parser->parse('footer', $dados);
     }
+    
+    public function recuperarProduto() {
+        $resultado = $this->input->post();
+        $id = $resultado["id"];
+        $dados = $this->Produto->getById($id);
+        echo json_encode($dados[0]);
+    }
+    
+    public function atualizarProduto() {
+        $dados = array_filter($this->input->post());
+        //echo $this->input->post("nome");
+        if(!isset($dados["nome"])){
+            $dados["nome"] = 0;
+        }
+        if(!isset($dados["quantidade"])){
+            $dados["quantidade"] = 0;
+        }
+        if(!isset($dados["preco"])){
+            $dados["preco"] = 0;
+        }
+        if(!isset($dados["descricao"])){
+            $dados["descricao"] = 0;
+        }
+        if(!isset($dados["informacoes"])){
+            $dados["informacoes"] = 0;
+        }
+        if($dados["quantidade"] == 0){
+            $dados["disponivel"] = 0;
+        }
+        $id = $dados["id"];
+        unset($dados["id"]);
+        if ($this->Produto->alterar($dados, $id)) {
+            $retorno["erro"] = false;
+            $retorno["msg"] = "Produto alterado com sucesso!";
+        }
+        else {
+            $retorno["erro"] = true;
+            $retorno["msg"] = "Ocorreu um erro ao alterar!";
+        }
+        //echo $this->db->last_query();
+        echo json_encode($retorno);
+    }
 
     public function inativarProduto() {
         $resultado = $this->input->post();
