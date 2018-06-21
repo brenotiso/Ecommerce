@@ -1,9 +1,6 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 class Home extends CI_Controller {
-
     public function __construct() {
         parent::__construct();
         $this->load->helper('url');
@@ -13,7 +10,6 @@ class Home extends CI_Controller {
         $this->load->database();
         $this->load->model("Produto");
     }
-
     public function index() {
         $dados = array(
             "url" => base_url(),
@@ -34,7 +30,6 @@ class Home extends CI_Controller {
         }
         $this->parser->parse('footer', $dados);
     }
-
     private function _carregarUltimosProdutos() {
         $resultado = $this->Produto->getUltimosPorId(5);
         if (count($resultado) > 0) {
@@ -43,9 +38,14 @@ class Home extends CI_Controller {
                     "url" => base_url(),
                     "id" => $produto["id"],
                     "nome" => $produto["nome"],
-                    //adicionar link img
                     "preco" => $produto["preco"]
                 );
+                $imagem = explode(";", $produto["img"]);
+                if($imagem[0] != ""){
+                    $produtosNovos["produtos"][count($produtosNovos["produtos"]) - 1]["img"] = "produtos/".$imagem[0];
+                }else{
+                    $produtosNovos["produtos"][count($produtosNovos["produtos"]) - 1]["img"] = "item-02.jpg";
+                }
                 if ($this->session->userdata("id")) {
                     $produtosNovos["produtos"][count($produtosNovos["produtos"]) - 1]["logado"] = "logado";
                 } else {
@@ -58,5 +58,4 @@ class Home extends CI_Controller {
         }
         return $dados;
     }
-
 }

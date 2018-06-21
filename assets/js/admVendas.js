@@ -72,16 +72,13 @@ $(document).ready(function () {
             success: function (retorno) {
                 if (!retorno.erro) { 
                     $("#modalGeral").modal("toggle");
-                    if($('.divPedido').length === 1){
-                        $("#nenhumaVenda").attr("class", "");
-                        $("#nenhumaVenda").css("padding-bottom", "100px");
-                    }
-                    $(".divPedido").find("[data-idPedido='" + pedido + "']").remove();
-                    swal("Sucesso", retorno.msg, "success");
+                    swal("Sucesso", retorno.msg, "success").then((value) => {
+                        location.reload();
+                    });
                 } else {
                     $("#modalGeral").modal("toggle");
                     swal("Opa", retorno.msg, "error");
-                };
+                }
             }
         });
     });
@@ -107,7 +104,7 @@ $(document).ready(function () {
                     $("#todosPedidos").html(retorno.tabelaNova);
                     $(".botao-venda").click().click();
                     arrumarNomeProduto();
-                };
+                }
             }
         });
     }

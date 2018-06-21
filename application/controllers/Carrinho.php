@@ -1,9 +1,6 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 class Carrinho extends CI_Controller {
-
     public function __construct() {
         parent::__construct();
         $this->load->helper('url');
@@ -14,7 +11,6 @@ class Carrinho extends CI_Controller {
             redirect("/Login");
         }
     }
-
     public function index() {
         $carrinho = $this->cart->contents();
         foreach ($carrinho as $key => $car) {
@@ -42,7 +38,6 @@ class Carrinho extends CI_Controller {
             $this->parser->parse('footer', $dados);
         }
     }
-
     public function add($id) {
         $this->load->database();
         $this->load->model("Produto");
@@ -53,18 +48,22 @@ class Carrinho extends CI_Controller {
                     $produtos[0]["nome"] = $produtos[0]["nome"] . "...";
                 }
                 $img = explode(";", $produtos[0]["img"]);
+                if($img[0] != ""){
+                    $imagem = "produtos/".$img[0];
+                }else{
+                    $imagem = "item-10.jpg";
+                }
                 $dados = array(
                     "id" => $produtos[0]["id"],
                     "qty" => 1,
                     "price" => $produtos[0]["preco"],
                     "name" => $produtos[0]["nome"],
-                    "img" => $img[0]
+                    "img" => $imagem
                 );
                 $this->cart->insert($dados);
             }
         }
     }
-
     public function atualizar() {
         $itens = $this->input->post();
         $this->load->database();
@@ -88,7 +87,6 @@ class Carrinho extends CI_Controller {
         }
         echo json_encode($retorno);
     }
-
     public function remover($rowid) {
         $this->cart->remove($rowid);
         redirect("/Carrinho");
@@ -117,5 +115,4 @@ class Carrinho extends CI_Controller {
         $this->cart->destroy();
         echo json_encode($retorno);
     }
-
 }

@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <tr class="table-row">
                         <td class="column-1">
                             <div class="cart-img-product b-rad-4 o-f-hidden">
-                                <img src="{url}assets/images/item-10.jpg" alt="IMG-PRODUCT">
+                                <img height="121" src="{url}assets/images/{img}" alt="IMG-PRODUCT">
                             </div>
                         </td>
                         <td class="column-2">
