@@ -13,6 +13,8 @@ composer.lock
 #-------------------------
 nbproject/*
 .idea/*
+.editorconfig
+desktop.ini
 
 ## Sublime Text cache files
 *.tmlanguage.cache
