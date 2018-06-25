@@ -88,7 +88,7 @@ class User extends CI_Controller {
         $a["id"] = $this->session->userdata("id");
         if ($this->Usuario->alterar($dados, $a["id"])) {
             $retorno["erro"] = false;
-            $retorno["msg"] = "Dados alterado/s com sucesso!";
+            $retorno["msg"] = "Dados alterados com sucesso!";
         } else {
             $retorno["erro"] = true;
             $retorno["msg"] = "Ocorreu um erro ao alterar!";
@@ -100,20 +100,20 @@ class User extends CI_Controller {
         $dados = array_filter($this->input->post());
         unset($dados["senhaNovaConfirmacao"]);
         $resultado["id"] = $this->session->userdata("id");
-        $resultado["senha"] = $dados["senhaAtual"];
+        $resultado["senha"] = md5($dados["senhaAtual"]);
         $resultado = $this->Usuario->get($resultado);
         if (count($resultado) > 0) {
-            if ($this->Usuario->alterar($dados["senhaNova"], $resultado["id"])) {
+            $resultado[0]["senha"] = md5($dados["senhaNova"]);
+            if ($this->Usuario->alterar($resultado[0], $resultado[0]["id"])) {
                 $retorno["erro"] = false;
                 $retorno["msg"] = "Senha alterada com sucesso!";
-            }
-            else {
+            } else {
                 $retorno["erro"] = true;
                 $retorno["msg"] = "Não foi possível alterar a senha!";
             }
         } else {
             $retorno["erro"] = true;
-            $retorno["msg"] = "Senha atual é não corresponde com a cadastrada!";
+            $retorno["msg"] = "Senha atual não corresponde com a cadastrada!";
         }
         echo json_encode($retorno);
     }
