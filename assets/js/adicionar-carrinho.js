@@ -11,26 +11,31 @@ $('.add-cart-logado').on('click', function () {
     $.ajax({
         url: url,
         type: "GET",
-        success: function () {
-            $('.div-carrinho-referencia').children("span").text(qtdNova);
-            $('.div-carrinho').children("span").text(qtdNova);
-            swal({
-                title: nameProduct,
-                text: "foi adicionado ao carrinho!",
-                icon: "success",
-                buttons: {
-                    continuar: "Continuar comprando",
-                    carrinho: true
-                }
-            }).then((value) => {
-                switch (value) {
-                    case "carrinho":
-                        $('.div-carrinho').click();
-                        break;
-                    default:
-                        break;
-                }
-            });
+        dataType: 'json',
+        success: function (retorno) {
+            if(!retorno.erro){
+                $('.div-carrinho-referencia').children("span").text(qtdNova);
+                $('.div-carrinho').children("span").text(qtdNova);
+                swal({
+                    title: nameProduct,
+                    text: "foi adicionado ao carrinho!",
+                    icon: "success",
+                    buttons: {
+                        continuar: "Continuar comprando",
+                        carrinho: true
+                    }
+                }).then((value) => {
+                    switch (value) {
+                        case "carrinho":
+                            $('.div-carrinho').click();
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }else{
+                swal("Opa", retorno.msg, "error");
+            }
         }
     });
 });

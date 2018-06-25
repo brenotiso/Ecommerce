@@ -46,7 +46,14 @@ class Carrinho extends CI_Controller {
         $this->load->model("Produto");
         $produtos = $this->Produto->getById($id, "carrinho");
         if (count($produtos) == 1 and $produtos[0]["disponivel"] == 1) {
-            if ($produtos[0]["quantidade"] > 0 and $produtos[0]["quantidade"] > $qtd) {
+            $qtdNoCarrinho = $this->_estaNoCarrinho($id);
+            if(!$qtdNoCarrinho){
+                $qtdNoCarrinho = 0;
+            }
+            if($qtd == null){
+                $qtd = 1;
+            }
+            if ($produtos[0]["quantidade"] > 0 and $produtos[0]["quantidade"] >= ($qtd + $qtdNoCarrinho)) {
                 if (strlen($produtos[0]["nome"]) === 27) {
                     $produtos[0]["nome"] = $produtos[0]["nome"] . "...";
                 }
@@ -55,9 +62,6 @@ class Carrinho extends CI_Controller {
                     $imagem = "produtos/".$img[0];
                 }else{
                     $imagem = "item-10.jpg";
-                }
-                if($qtd == null){
-                    $qtd = 1;
                 }
                 $dados = array(
                     "id" => $produtos[0]["id"],
@@ -70,7 +74,7 @@ class Carrinho extends CI_Controller {
                 $retorno["erro"] = false;
             }else{
                 $retorno["erro"] = true;
-                if($produtos[0]["quantidade"] < $qtd){
+                if($produtos[0]["quantidade"] < $qtd or $produtos[0]["quantidade"] < ($qtd + $qtdNoCarrinho)){
                     $retorno["msg"] = "A quantidade disponível é de: " . $produtos[0]["quantidade"];
                 }else{
                     $retorno["msg"] = "O produto não está disponível!";
@@ -149,5 +153,15 @@ class Carrinho extends CI_Controller {
         }
         $t["erro"] = false;
         return $t;
+    }
+    
+    private function _estaNoCarrinho($id){
+        $itens = $this->cart->contents();
+        foreach($itens as $item){
+            if($id == $item["id"]){
+                return $item["qty"];
+            }
+        }
+        return false;
     }
 }

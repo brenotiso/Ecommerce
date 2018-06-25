@@ -31,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                         </td>
                         <td class="column-2">
-                            <a href="#{id}" class="header-cart-item-name">{name}</a>
+                            <a href="produto/{id}" class="header-cart-item-name">{name}</a>
                         </td>
                         <td class="column-3">R$ {price}</td>
                         <td class="column-4 p-l-100">

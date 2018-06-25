@@ -75,7 +75,7 @@ $(document).ready(function () {
         },
         submitHandler: function () {
             var dados = $("#form-alterar").serialize();
-            $.post("User/alterarDados", dados, function (retorno) {
+            $.post("../User/alterarDados", dados, function (retorno) {
                 retorno = JSON.parse(retorno);
                 if (!retorno.erro) {
                     swal("Tudo certo", retorno.msg, "success");
@@ -101,8 +101,8 @@ $(document).ready(function () {
             senhaNovaConfirmacao: "As senhas não conferem"
         },
         submitHandler: function () {
-            var dados = $("#form-cadastro").serialize();
-            $.post("User/alterarSenha", dados, function (retorno) {
+            var dados = $("#form-alterarSenha").serialize();
+            $.post("../User/alterarSenha", dados, function (retorno) {
                 retorno = JSON.parse(retorno);
                 if (!retorno.erro) {
                     swal("Tudo certo", retorno.msg, "success");
@@ -118,7 +118,7 @@ $(document).ready(function () {
         $("#senha").attr("class", "");
     });
 
-    $("#botaoVoltar").click(function () {
+    $(document).on("click", "#botaoVoltar", function () {
         $("#senha").attr("class", "hidden");
         $("#geral").attr("class", "");
     });

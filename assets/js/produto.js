@@ -2,7 +2,7 @@ $('.addCarinho-logado').on('click', function () {
     var nameProducto = $(".product-detail-name").text();
     var idProduto = $("#idProduto").val();
     var qtdProd = $("#qtdProduto").val();
-    var qtdNova = parseInt($('.div-carrinho-referencia').children("span").text()) + qtdProd;
+    var qtdNova = parseInt($('.div-carrinho-referencia').children("span").text()) + parseInt(qtdProd);
     $.ajax({
         url: "../Carrinho/add/" + idProduto + "/" + qtdProd,
         type: "POST",
