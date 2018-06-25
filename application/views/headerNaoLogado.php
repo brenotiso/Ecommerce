@@ -55,9 +55,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <nav class="menu">
                             <ul class="main_menu">
                                 <li>
-                                    <form class="form-inline form-pesquisar-produto">
+                                    <form method="POST" action="{url}BuscaProduto/buscarProduto" class="form-inline form-pesquisar-produto">
                                         <div class="of-hidden">
-                                            <input class="form-control" type="text" name="search-product" placeholder="Buscar produto...">
+                                            <input class="form-control" type="text" name="nome" placeholder="Buscar produto...">
                                             <button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4" type="submit">
                                                 <i class="fs-12 fa fa-search" aria-hidden="true"></i>
                                             </button>

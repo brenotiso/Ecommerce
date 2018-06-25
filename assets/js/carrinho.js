@@ -43,9 +43,9 @@ $(document).ready(function () {
             type: 'GET',
             success: function (retorno) {
                 if (retorno.erro === true) {
-                    swal("Opa!", "Ocorreu um erro ao finalizar sua compra", "error");
+                    swal("Opa!", retorno.msg, "error");
                 } else {
-                    window.location.href = "Usuario/compras";
+                    window.location.href = "minhascompras";
                 }
             }
         });

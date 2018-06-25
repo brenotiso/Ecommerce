@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Carrinho extends CI_Controller {
+    
     public function __construct() {
         parent::__construct();
         $this->load->helper('url');
@@ -11,6 +12,7 @@ class Carrinho extends CI_Controller {
             redirect("/Login");
         }
     }
+    
     public function index() {
         $carrinho = $this->cart->contents();
         foreach ($carrinho as $key => $car) {
@@ -38,12 +40,13 @@ class Carrinho extends CI_Controller {
             $this->parser->parse('footer', $dados);
         }
     }
-    public function add($id) {
+    
+    public function add($id, $qtd = null) {
         $this->load->database();
         $this->load->model("Produto");
         $produtos = $this->Produto->getById($id, "carrinho");
-        if (count($produtos) == 1) {
-            if ($produtos[0]["disponivel"] == 1 and $produtos[0]["quantidade"] > 0) {
+        if (count($produtos) == 1 and $produtos[0]["disponivel"] == 1) {
+            if ($produtos[0]["quantidade"] > 0 and $produtos[0]["quantidade"] > $qtd) {
                 if (strlen($produtos[0]["nome"]) === 27) {
                     $produtos[0]["nome"] = $produtos[0]["nome"] . "...";
                 }
@@ -53,17 +56,30 @@ class Carrinho extends CI_Controller {
                 }else{
                     $imagem = "item-10.jpg";
                 }
+                if($qtd == null){
+                    $qtd = 1;
+                }
                 $dados = array(
                     "id" => $produtos[0]["id"],
-                    "qty" => 1,
+                    "qty" => $qtd,
                     "price" => $produtos[0]["preco"],
                     "name" => $produtos[0]["nome"],
                     "img" => $imagem
                 );
                 $this->cart->insert($dados);
+                $retorno["erro"] = false;
+            }else{
+                $retorno["erro"] = true;
+                if($produtos[0]["quantidade"] < $qtd){
+                    $retorno["msg"] = "A quantidade disponível é de: " . $produtos[0]["quantidade"];
+                }else{
+                    $retorno["msg"] = "O produto não está disponível!";
+                }
             }
         }
+        echo json_encode($retorno);
     }
+    
     public function atualizar() {
         $itens = $this->input->post();
         $this->load->database();
@@ -87,32 +103,51 @@ class Carrinho extends CI_Controller {
         }
         echo json_encode($retorno);
     }
+    
     public function remover($rowid) {
         $this->cart->remove($rowid);
         redirect("/Carrinho");
     }
     
     public function finalizarCompra(){
-        $itens = $this->cart->contents();
-        if(count($itens) == 0){
-            $retorno["erro"] = true;
+        $teste = $this->_validarCarrinho();
+        if(!$teste["erro"]){
+            $itens = $this->cart->contents();
+            if(count($itens) == 0){
+                $retorno["erro"] = true;
+            }
+            $this->load->database();
+            $this->load->model("Compra");
+            $dados["idCliente"] = $this->session->userdata("id");
+            $dados["status"] = "Pedido";
+            $this->Compra->insert($dados);
+            $idCompra = $this->db->insert_id();
+
+            $this->load->model("ProdutoCompra");
+            foreach($itens as $item){
+                $dados2["idProduto"] = $item["id"];
+                $dados2["idCompra"] = $idCompra;
+                $dados2["quantidade"] = $item["qty"];
+                $this->ProdutoCompra->insert($dados2);
+            }
+            $this->cart->destroy();
         }
+        echo json_encode($teste);
+    }
+    
+    private function _validarCarrinho(){
         $this->load->database();
-        $this->load->model("Compra");
-        $dados["idCliente"] = $this->session->userdata("id");
-        $dados["status"] = "Pedido";
-        $this->Compra->insert($dados);
-        $idCompra = $this->db->insert_id();
-        
-        $this->load->model("ProdutoCompra");
+        $this->load->model("Produto");
+        $itens = $this->cart->contents();
         foreach($itens as $item){
-            $dados2["idProduto"] = $item["id"];
-            $dados2["idCompra"] = $idCompra;
-            $dados2["quantidade"] = $item["qty"];
-            $this->ProdutoCompra->insert($dados2);
-            $retorno["erro"] = false;
+            $prod = $this->Produto->getQuantidadeById($item["id"]);
+            if($prod[0]["quantidade"] < $item["qty"]){
+                $t["erro"] = true;
+                $t["msg"] = "Só existem ". $prod[0]["quantidade"] . "disponíveis para o produto ". $item["name"];
+                return $t;
+            }
         }
-        $this->cart->destroy();
-        echo json_encode($retorno);
+        $t["erro"] = false;
+        return $t;
     }
 }

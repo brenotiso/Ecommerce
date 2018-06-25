@@ -2275,7 +2275,6 @@
 -----------------------------------------------------------
 */
 
-.hidden{display: none;}
 .dis-none {display: none;}
 .dis-block {display: block;}
 .dis-inline {display: inline;}
@@ -4154,3 +4153,5 @@ RESPONSIVE  RESPONSIVE  RESPONSIVE  RESPONSIVE   RESPONSIVE
 		width: 100%;
 	}
 }
+
+.hidden{display: none;}

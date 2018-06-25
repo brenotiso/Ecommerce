@@ -1,9 +1,15 @@
 $('.add-cart-logado').on('click', function () {
-    var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+    var nameProduct = $(this).parent().parent().parent().find('.block2-name').text();
     var idProduto = $(this).attr("data-idProduto");
     var qtdNova = parseInt($('.div-carrinho-referencia').children("span").text()) + 1;
+    var url = "Carrinho/add/" + idProduto;
+    var urlAtual = window.location.pathname.split("/");
+    if(urlAtual[1] == "BuscaProduto"){
+       url = "../Carrinho/add/" + idProduto;
+       nameProduct = $("#nomeProduto-" + idProduto).text();
+    }
     $.ajax({
-        url: "Carrinho/add/" + idProduto,
+        url: url,
         type: "GET",
         success: function () {
             $('.div-carrinho-referencia').children("span").text(qtdNova);

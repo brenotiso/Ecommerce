@@ -14,7 +14,7 @@ class Compra extends CI_Model {
     }
 
     public function getProdutosPorCompra($id) {
-        $query = $this->db->query('SELECT PC.idCompra AS idPedido, P.nome AS nomeProduto, PC.idProduto, PC.quantidade ' 
+        $query = $this->db->query('SELECT PC.idCompra AS idPedido, P.nome AS nomeProduto, PC.idProduto, PC.quantidade, P.preco ' 
             .'FROM produto_compra PC, produto P '
             .'WHERE PC.idProduto = P.id AND PC.idCompra = ' . $id);
         return $query->result_array();

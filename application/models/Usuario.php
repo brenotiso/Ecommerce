@@ -4,8 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Usuario extends CI_Model {
 
-    public function get($dados) {
-        $this->db->where($dados);
+    public function get($dados = null) {
+        if($dados){
+            $this->db->where($dados);
+        }
         $retorno = $this->db->get('usuario');
         return $retorno->result_array();
     }
@@ -17,7 +19,7 @@ class Usuario extends CI_Model {
         return $retorno->result_array();
     }
 
-    public function getUsuarioJoinCompra($nome = null) {
+    public function getUsuarioJoinCompra($nome = null, $id = null) {
         $this->db->select('U.id, U.nome as nomeCliente, U.cpf , U.telefone, '
                 . 'U.email, U.rua, U.bairro, U.numero, U.complemento, U.cep, '
                 . 'U.cidade, U.estado, U.dataCadastro, C.id as idPedido, C.data, C.status');
@@ -27,6 +29,9 @@ class Usuario extends CI_Model {
         $this->db->order_by('C.id', 'DESC');
         if($nome != null){
             $this->db->like('U.nome', $nome, 'both');
+        }
+        if($id != null){
+            $this->db->where('U.id', $id);
         }
         $retorno = $this->db->get();
         return $retorno->result_array();

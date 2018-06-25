@@ -11,9 +11,10 @@ class Produto extends CI_Model {
         $retorno = $this->db->get("produto");
         return $retorno->result_array();
     }
-    
-    public function getByDisponibilidade() {
-        $this->db->where('disponivel', 1);
+  
+    public function getQuantidadeById($id) {
+        $this->db->select('quantidade');
+        $this->db->where('id', $id);
         $retorno = $this->db->get("produto");
         return $retorno->result_array();
     }

@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
 
         <div class="block2-txt p-t-20">
-            <a href="product-detail.html" id="divNomeProduto" class="block2-name dis-block s-text3 p-b-5">{nome}</a>
+            <a href="produto/{id}" id="divNomeProduto" class="block2-name dis-block s-text3 p-b-5">{nome}</a>
             <span class="block2-price m-text6 p-r-5">R$ {preco}</span>
         </div>
     </div>

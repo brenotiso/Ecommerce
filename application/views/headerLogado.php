@@ -53,9 +53,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <nav class="menu">
                             <ul class="main_menu">
                                 <li>
-                                    <form class="form-inline form-pesquisar-produto">
+                                    <form method="POST" action="{url}BuscaProduto/buscarProduto" class="form-inline form-pesquisar-produto">
                                         <div class="of-hidden">
-                                            <input class="form-control" type="text" name="search-product" placeholder="Buscar produto...">
+                                            <input class="form-control" type="text" name="nome" placeholder="Buscar produto...">
                                             <button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4" type="submit">
                                                 <i class="fs-12 fa fa-search" aria-hidden="true"></i>
                                             </button>
@@ -76,14 +76,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="header-cart header-dropdown">
                                 <ul class="header-cart-wrapitem">
                                     <li class="header-cart-item pos-center">	
-                                        <a href="{url}Usuario/Dados"><i class="fa fa-user-o p-r-2" aria-hidden="true"></i>Meus Dados</a>
+                                        <a href="{url}meusdados"><i class="fa fa-user-o p-r-2" aria-hidden="true"></i>Meus Dados</a>
                                     </li>
                                     <li class="header-cart-item pos-center">
-                                        <a href="{url}Usuario/Compras"><i class="fa fa-list-ul p-r-2" aria-hidden="true"></i></i>Minhas Compras</a>
+                                        <a href="{url}minhascompras"><i class="fa fa-list-ul p-r-2" aria-hidden="true"></i></i>Minhas Compras</a>
                                     </li>
                                     {opcoesAdmin}
                                     <li class="header-cart-item pos-center">
-                                        <a href="{url}Login/sair"><i class="fa fa-sign-out p-r-2" aria-hidden="true"></i></i>Sair</a><br>
+                                        <a href="{url}sair"><i class="fa fa-sign-out p-r-2" aria-hidden="true"></i></i>Sair</a><br>
                                     </li>
                                 </ul>
                             </div>	
@@ -119,14 +119,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="header-cart header-dropdown">
                             <ul class="header-cart-wrapitem">
                                 <li class="header-cart-item">	
-                                    <a href="{url}Usuario/Dados"><i class="fa fa-user-o" aria-hidden="true"></i>Meus Dados</a>
+                                    <a href="{url}meusdados"><i class="fa fa-user-o" aria-hidden="true"></i>Meus Dados</a>
                                 </li>
                                 <li class="header-cart-item">
-                                    <a href="{url}Usuario/Compras"><i class="fa fa-list-ul" aria-hidden="true"></i></i>Minhas Compras</a>
+                                    <a href="{url}minhascompras"><i class="fa fa-list-ul" aria-hidden="true"></i></i>Minhas Compras</a>
                                 </li>
                                 {opcoesAdmin}
                                 <li class="header-cart-item">
-                                    <a href="{url}Login/sair"><i class="fa fa-sign-out" aria-hidden="true"></i></i>Sair</a><br>
+                                    <a href="{url}sair"><i class="fa fa-sign-out" aria-hidden="true"></i></i>Sair</a><br>
                                 </li>
                             </ul>
                         </div>	

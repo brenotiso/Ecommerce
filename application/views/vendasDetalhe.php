@@ -63,7 +63,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             {detalheProduto}
             <div>
                 <div class="column-1elemento">{quantidade}</div>
-                <div class="column-2elemento nomeProduto"><a class="linkProduto" href="#">{nomeProduto}</a></div>
+                <div class="column-2elemento nomeProduto"><a class="linkProduto" href="produto/{idProduto}">{nomeProduto}</a></div>
                 <div class="column-3elemento">{idProduto}</div>
             </div>
             {/detalheProduto}

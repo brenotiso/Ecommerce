@@ -52,3 +52,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'Home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['sair'] = 'Login/sair';
+
+$route['minhasCompras'] = 'user/compras';
+$route['minhascompras'] = 'user/compras';
+$route['meusDados'] = 'user/dadosPessoais';
+$route['meusdados'] = 'user/dadosPessoais';
+$route['meusDados/alterar'] = 'user/alterarDadosPessoais';
+$route['meusdados/alterar'] = 'user/alterarDadosPessoais';
+
+$route['produto/(:num)'] = 'ProdutoDetalhe/index/$1';
+$route['Produto/(:num)'] = 'ProdutoDetalhe/index/$1';
+
+$route['Carrinho/add/(:num)'] = 'Carrinho/add/$1';
+$route['carrinho/add/(:num)/(:num)'] = 'Carrinho/add/$1/$2';

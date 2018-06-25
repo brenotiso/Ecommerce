@@ -2553,4 +2553,8 @@ input.num-product::-webkit-inner-spin-button {
     z-index: 1200;
 }
 
+.indisponivel{
+    color: red;
+    font-weight: bold;
+}
 
