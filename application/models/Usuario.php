@@ -43,6 +43,13 @@ class Usuario extends CI_Model {
         }
         return false;
     }
-
+    
+    public function alterar($dados, $id) {
+        $this->db->where("id", $id);
+        if ($this->db->update("usuario", $dados)) {
+            return true;
+        }
+        return false;
+    }
 }
 

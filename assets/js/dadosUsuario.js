@@ -39,7 +39,7 @@ jQuery.validator.addMethod("cpf", function (value, element) {
 }, "Informe um CPF válido");
 
 $(document).ready(function () {
-    $(".form-alterar").validate({
+    $("#form-alterar").validate({
         rules: {
             nome: "required",
             cpf: {
@@ -60,17 +60,10 @@ $(document).ready(function () {
                 maxlength: 8
             },
             cidade: "required",
-            estado: "required",
-            senhaAtual: "required",
-            senhaNova: "required",
-            senhaNovaConfirmacao: {
-                required: true,
-                equalTo: "#senha"
-            }
+            estado: "required"
         },
         messages: {
             nome: "Entre com um nome",
-            cpf: "CPF inválido",
             telefone: "Entre com um número de telefone",
             email: "Email inválido",
             rua: "Entre com a rua",
@@ -78,27 +71,48 @@ $(document).ready(function () {
             numero: "Entre com o número",
             cep: "Entre com o CEP",
             cidade: "Entre com a cidade",
-            senhaAtual: "senha diferente da cadastrada",
-            senhaNova: "Entre com uma senha",
-            senhaNovaConfirmacao: "As senhas não conferem",
             estado: "Entre com o estado"
         },
         submitHandler: function () {
             var dados = $("#form-alterar").serialize();
-            console.log(dados);
-//            jQuery.post("Cadastro/cadastrar", dados, function (retorno) {
-//                retorno = JSON.parse(retorno);
-//                if (!retorno.erro) {
-//                    swal("Tudo certo", retorno.msg, "success").then((value) => {
-//                        window.location.href = $('#botaoLogin').attr('href');
-//                    });
-//                } else {
-//                    swal("Opa", retorno.msg, "error");
-//                }
-//            });
+            $.post("User/alterarDados", dados, function (retorno) {
+                retorno = JSON.parse(retorno);
+                if (!retorno.erro) {
+                    swal("Tudo certo", retorno.msg, "success");
+                } else {
+                    swal("Opa", retorno.msg, "error");
+                }
+            });
         }
     });
-    
+
+    $("#form-alterarSenha").validate({
+        rules: {
+            senhaAtual: "required",
+            senhaNova: "required",
+            senhaNovaConfirmacao: {
+                required: true,
+                equalTo: "#senhaNova"
+            }
+        },
+        messages: {
+            senhaAtual: "Entre com a senha atual",
+            senhaNova: "Entre com uma senha",
+            senhaNovaConfirmacao: "As senhas não conferem"
+        },
+        submitHandler: function () {
+            var dados = $("#form-cadastro").serialize();
+            $.post("User/alterarSenha", dados, function (retorno) {
+                retorno = JSON.parse(retorno);
+                if (!retorno.erro) {
+                    swal("Tudo certo", retorno.msg, "success");
+                } else {
+                    swal("Opa", retorno.msg, "error");
+                }
+            });
+        }
+    });
+
     $(document).on("click", "#botaoSenha", function () {
         $("#geral").attr("class", "hidden");
         $("#senha").attr("class", "");

@@ -17,7 +17,7 @@ class User extends CI_Controller {
         $this->load->model("Usuario");
     }
 
-    private function _carregarHeader(){
+    private function _carregarHeader() {
         $dados = array(
             "url" => base_url(),
             "qtdCarrinho" => $this->cart->total_items(),
@@ -31,12 +31,12 @@ class User extends CI_Controller {
         $this->parser->parse('headerLogado', $dados);
         return $dados;
     }
-    
+
     public function compras() {
         $this->load->model("Produto");
         $this->load->model("Compra");
         $dados = $this->_carregarHeader();
-        
+
         $compras = $this->Usuario->getUsuarioJoinCompra(null, $this->session->userdata("id"));
         $retorno["temCompra"] = "hidden";
         if (count($compras) == 0) {
@@ -48,7 +48,7 @@ class User extends CI_Controller {
             $compra["data"] = date_format(date_create($compra["data"]), "d/m/Y - H:i:s");
             $resultado = null;
             $resultado = $this->Compra->getProdutosPorCompra($compra["idPedido"]);
-            foreach($resultado as $key2 => $result){
+            foreach ($resultado as $key2 => $result) {
                 $compra["total"] += $result["preco"] * $result["quantidade"];
                 $resultado[$key2]["totalProduto"] = $result["preco"] * $result["quantidade"];
             }
@@ -59,26 +59,63 @@ class User extends CI_Controller {
         $this->parser->parse('comprasRealizadas', $retorno);
         $this->parser->parse('footer', $dados);
     }
-    
+
     public function dadosPessoais() {
         $dados = $this->_carregarHeader();
         $a["id"] = $this->session->userdata("id");
         $usuario = $this->Usuario->get($a);
         unset($usuario[0]["senha"]);
-        if($usuario[0]["complemento"]){
+        if ($usuario[0]["complemento"]) {
             $usuario[0]["complemento"] = " - " . $usuario[0]["complemento"];
         }
         $usuario[0]["dataCadastro"] = date_format(date_create($usuario[0]["dataCadastro"]), "d/m/Y - H:i:s");
         $this->parser->parse('dadosUsuario', array_merge($dados, $usuario[0]));
         $this->parser->parse('footer', $dados);
     }
-    
+
     public function alterarDadosPessoais() {
         $dados = $this->_carregarHeader();
         $a["id"] = $this->session->userdata("id");
         $usuario = $this->Usuario->get($a);
         unset($usuario[0]["senha"]);
+        unset($usuario[0]["id"]);
         $this->parser->parse('alterar', array_merge($dados, $usuario[0]));
         $this->parser->parse('footer', $dados);
     }
+
+    public function alterarDados() {
+        $dados = array_filter($this->input->post());
+        $a["id"] = $this->session->userdata("id");
+        if ($this->Usuario->alterar($dados, $a["id"])) {
+            $retorno["erro"] = false;
+            $retorno["msg"] = "Dados alterado/s com sucesso!";
+        } else {
+            $retorno["erro"] = true;
+            $retorno["msg"] = "Ocorreu um erro ao alterar!";
+        }
+        echo json_encode($retorno);
+    }
+
+    public function alterarSenha() {
+        $dados = array_filter($this->input->post());
+        unset($dados["senhaNovaConfirmacao"]);
+        $resultado["id"] = $this->session->userdata("id");
+        $resultado["senha"] = $dados["senhaAtual"];
+        $resultado = $this->Usuario->get($resultado);
+        if (count($resultado) > 0) {
+            if ($this->Usuario->alterar($dados["senhaNova"], $resultado["id"])) {
+                $retorno["erro"] = false;
+                $retorno["msg"] = "Senha alterada com sucesso!";
+            }
+            else {
+                $retorno["erro"] = true;
+                $retorno["msg"] = "Não foi possível alterar a senha!";
+            }
+        } else {
+            $retorno["erro"] = true;
+            $retorno["msg"] = "Senha atual é não corresponde com a cadastrada!";
+        }
+        echo json_encode($retorno);
+    }
+
 }

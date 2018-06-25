@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="pos-center">
             <div class="p-b-30">
                 <div class="" id="geral">
-                    <form class="form-alterar">
+                    <form id="form-alterar">
                         <h4 class="m-text17 p-b-36 p-t-15">
                             Atualize as informações necessárias
                         </h4>
@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
 
                         <div class="bo4 size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="cpf" placeholder="Cpf" value="{cpf}">
+                            <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="cpf" placeholder="Cpf" value="{cpf}" disabled="disabled">
                         </div>
 
                         <div class="bo4 size15 m-b-20">
@@ -77,7 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
 
                 <div class="hidden" id="senha">
-                    <form class="form-alterar">
+                    <form id="form-alterarSenha">
                         <h4 class="m-text17 p-b-36 p-t-15">
                             Atualize sua senha
                         </h4>
@@ -87,7 +87,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
 
                         <div class="bo4 size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="password" name="senhaNova" placeholder="Nova senha">
+                            <input class="sizefull s-text7 p-l-22 p-r-22" type="password" name="senhaNova" id="senhaNova" placeholder="Nova senha">
                         </div>
 
                         <div class="bo4 size15 m-b-20">
@@ -96,9 +96,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                         <div class="pos-center p-b-5">
                             <!-- Button -->
-                            <button class="flex-c-m size10 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
-                                Salvar
-                            </button>
+                            <button class="flex-c-m size10 bg1 bo-rad-23 hov1 m-text3 trans-0-4">Salvar</button>
                         </div>
 
                     </form>
