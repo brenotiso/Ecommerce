@@ -21,7 +21,8 @@ class User extends CI_Controller {
         $dados = array(
             "url" => base_url(),
             "qtdCarrinho" => $this->cart->total_items(),
-            "scripts" => "<script src='" . base_url() . "assets/js/usuarioCompras.js'></script>",
+            "scripts" => "<script src='" . base_url() . "assets/vendor/jquery-validation/dist/jquery.validate.js'></script>\n"
+            . "<script src='" . base_url() . "assets/js/dadosUsuario.js'></script>",
             "opcoesAdmin" => ""
         );
         if ($this->session->userdata("privilegio") == 1) {
@@ -72,4 +73,12 @@ class User extends CI_Controller {
         $this->parser->parse('footer', $dados);
     }
     
+    public function alterarDadosPessoais() {
+        $dados = $this->_carregarHeader();
+        $a["id"] = $this->session->userdata("id");
+        $usuario = $this->Usuario->get($a);
+        unset($usuario[0]["senha"]);
+        $this->parser->parse('alterar', array_merge($dados, $usuario[0]));
+        $this->parser->parse('footer', $dados);
+    }
 }
