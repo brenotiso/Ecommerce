@@ -166,7 +166,6 @@ $(document).ready(function () {
     });
 
     function pesquisarProduto(produto) {
-        console.log(produto);
         $.ajax({
             url: "ManterProdutos/buscarProduto",
             type: 'POST',

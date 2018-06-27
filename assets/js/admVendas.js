@@ -28,7 +28,7 @@ $(document).ready(function () {
         var id = $(this).attr("data-idPedido");
         $("#modalGeral").find(".idPedido").html(id);
         $("#modalGeral").find(".modal-title").html("Cancelar Pedido #" + id);
-        $("#modalGeral").find(".modal-body").html("<p>Tem certeza que dezeja cancelar o pedido #" + id + "?<br> Ele será excuido do banco de dados definitivamente!</p>");
+        $("#modalGeral").find(".modal-body").html("<p>Tem certeza que dezeja cancelar o pedido #" + id + "?<br> Ele será excluido do banco de dados definitivamente!</p>");
         $(".btnModal").html("Cancelar");
         $(".btnModal").attr("class", "btn btn-danger btnModal");
         $(".btnModal").attr("id", "cancelarPedido");

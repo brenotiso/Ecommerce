@@ -49,20 +49,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     </div> 
     
-    <!-- /#list -->
-    <!--
-    <div id="bottom" class="row">
-            <div class="col-md-12">
-                    <ul class="pagination">
-                            <li class="disabled p-r-2"><a>&lt; Anterior</a></li>
-                            <li class="disabled p-r-2"><a>1</a></li>
-                            <li class="p-r-2"><a href="#">2</a></li>
-                            <li class="p-r-2"><a href="#">3</a></li>
-                            <li class="next "><a href="#" rel="next">Próximo &gt;</a></li>
-                    </ul>
-            </div>
-    </div> -->
-    
 </section>
 
 <!-- Modal Add Produto-->
